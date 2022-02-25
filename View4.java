@@ -1,5 +1,3 @@
-package mvcexample;
-
 // This is the pink view.
 // It displays the B component of the model (data base).
 // As supplied, this view does not subscribe to the model as an Observer,
@@ -9,7 +7,7 @@ import java.util.*;  // For Observer
 import java.awt.*;
 import javax.swing.*;
 
-public class View4 extends JPanel {
+public class View4 extends JPanel implements Observer{
   
     private Model model;
     private Controller2 contr;   // Parent Frame
@@ -28,16 +26,18 @@ public class View4 extends JPanel {
         add(new JLabel("View4"));
         display = new JTextField("No data", 15);
         add(display);
-      
+
+        model.addObserver(this);
+
     } // constructor
-    
-    // Called by controller to refresh the view:
-    public void update() {
-        
+
+    // Notified by the model when it is altered:
+    public void update(Observable o, Object arg) {
+
         // Fetch (potentially) updated information and display it
         int b = model.getDataB();
         display.setText("Model data B: " + b);
-      
+
     } // update
     
     // Called by the controller to clear the view:
